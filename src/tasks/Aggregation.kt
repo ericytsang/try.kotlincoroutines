@@ -1,6 +1,8 @@
 package tasks
 
 import contributors.User
+import java.util.Comparator
+import java.util.Comparator.comparing
 
 /*
 TODO: Write aggregation code.
@@ -19,4 +21,6 @@ fun List<User>.aggregate(): List<User> =
         .aggregate { _, accumulator:User?, element, _ ->
             element.copy(contributions = element.contributions+(accumulator?.contributions?:0))
         }
-        .values.sortedByDescending { it.contributions }
+        .values
+        .sortedWith(compareByDescending<User> {it.contributions}
+        .thenByDescending {it.login})
